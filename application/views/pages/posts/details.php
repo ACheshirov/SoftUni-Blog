@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php endif; ?>
 
     <?=form_open()?>
+    <?php if (!$_isLogged) : ?>
     <div class="form-group">
         <label for="form_author" class="required">Автор</label>
         <input type="text" id="form_author" name="author" required="required" class="form-control" placeholder="Автор" value="<?=set_value("author")?>" />
@@ -25,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <label for="form_email">E-mail адрес</label>
         <input type="email" id="form_email" name="email" class="form-control" placeholder="E-mail адрес" value="<?=set_value("email")?>" />
     </div>
-
+    <?php endif; ?>
     <div class="form-group">
         <label for="form_description" class="required">Съобщение</label>
         <textarea id="form_description" name="description" required="required" rows="5" class="form-control" placeholder="Съобщение"><?=set_value("description")?></textarea>
@@ -36,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php foreach ($comments as $comment) : ?>
     <div class="comment">
         <i class="fa fa-user-o"></i> <span class="author"><?=htmlspecialchars($comment['author'])?></span>
-        <span class="options"><?=(!$comment['approved'] && $isAdmin) ? '[<a href="">Одобри</a>] ' : ''?><?=($isAdmin) ? '[<a href="">Изтрий</a>]' : ''?></span>
+        <span class="options"><?=(!$comment['approved'] && $_isAdmin) ? '[<a href="?approveComment='.$comment['id'].'&token='.$_token.'">Одобри</a>] ' : ''?><?=($_isAdmin) ? '[<a href="?delComment='.$comment['id'].'&token='.$_token.'" onclick="return confirm(\'Сигурни ли сте?\')">Изтрий</a>]' : ''?></span>
         <p><?=nl2br(htmlspecialchars($comment['description']));?></p>
         &nbsp;<span class="date"><i class="fa fa-clock-o"></i> <?=date('H:i d.m.Y', strtotime($comment['dateCreate']))?></span>
     </div>

@@ -50,6 +50,6 @@ class Register extends MY_Controller
             }
         }
 
-        $this->show("register", $data);
+        $this->show("pages/profile/register", $data);
     }
 }

@@ -10,6 +10,6 @@ class Home extends MY_Controller {
             "posts" => $this->Posts->getPosts()
         );
 
-		$this->show("home", $data);
+		$this->show("pages/home", $data);
 	}
 }

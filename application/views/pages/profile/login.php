@@ -10,8 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <?=form_open()?>
     <div class="form-group">
-        <label for="form_author" class="required">Потребителско име</label>
-        <input type="text" id="form_author" name="username" required="required" class="form-control" placeholder="Потребителско име" value="<?=set_value("username")?>" />
+        <label for="form_username" class="required">Потребителско име</label>
+        <input type="text" id="form_username" name="username" required="required" class="form-control" placeholder="Потребителско име" value="<?=set_value("username")?>" />
     </div>
 
     <div class="form-group">

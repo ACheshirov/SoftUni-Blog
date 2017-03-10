@@ -26,6 +26,6 @@ class Login extends MY_Controller
                 $data['error'] = "Грешно потребителско име или парола.";
         }
 
-        $this->show("login", $data);
+        $this->show("pages/profile/login", $data);
     }
 }
