@@ -21,11 +21,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ path('homepage') }}">Блогът на HunteR</a>
+            <a class="navbar-brand" href="<?=site_url("")?>">Блогът на HunteR</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="{{ path('homepage') }}">Начало</a></li>
+                <li class="active"><a href="<?=site_url("")?>">Начало</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li class="dropdown">

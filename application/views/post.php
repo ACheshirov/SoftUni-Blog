@@ -35,9 +35,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <hr />
     <?php foreach ($comments as $comment) : ?>
     <div class="comment">
-        <i class="fa fa-user-o"></i> <span class="author"><?=$comment['author']?></span>
+        <i class="fa fa-user-o"></i> <span class="author"><?=htmlspecialchars($comment['author'])?></span>
         <span class="options"><?=(!$comment['approved'] && $isAdmin) ? '[<a href="">Одобри</a>] ' : ''?><?=($isAdmin) ? '[<a href="">Изтрий</a>]' : ''?></span>
-        <p><?=nl2br($comment['description']);?></p>
+        <p><?=nl2br(htmlspecialchars($comment['description']));?></p>
         &nbsp;<span class="date"><i class="fa fa-clock-o"></i> <?=date('H:i d.m.Y', strtotime($comment['dateCreate']))?></span>
     </div>
     <?php endforeach; ?>

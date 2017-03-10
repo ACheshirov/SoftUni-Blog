@@ -8,11 +8,16 @@ class MY_Controller extends CI_Controller
         $this->load->view($loadLayout, array("contentBody" => $this->load->view($view, $data, true)));
     }
 
-    public function setLogged($idUser, $isAdmin) {
+    public function setLogged($idUser, $username, $isAdmin) {
         $this->session->set_userdata(array(
             "id_user" => (int)$idUser,
+            "username" => $username,
             "isAdmin" => (bool)$isAdmin
         ));
+    }
+
+    public function setLogout() {
+        $this->session->unset_userdata(array("id_user", "username", "isAdmin"));
     }
 
     public function isLogged() {
