@@ -3,9 +3,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller
 {
-    public function show($view, $data = null, $loadLayout = null) {
+    private $token = null;
+
+    public function __construct() {
+        parent::__construct();
+
+        $this->token = $this->session->userdata("token");
+        if ($this->token === null)
+            $this->generateToken();
+    }
+
+    public function show($view, $data = array(), $loadLayout = null) {
         if ($loadLayout === null) $loadLayout = "baseLayout";
-        $this->load->view($loadLayout, array("contentBody" => $this->load->view($view, $data, true)));
+
+        $data = array_merge($data, array(
+            "_isLogged" => $this->isLogged(),
+            "_isAdmin" => $this->isAdmin(),
+            "_username" => $this->session->userdata("username"),
+            "_token" => $this->token
+        ));
+
+        $this->load->view("layouts/".$loadLayout, array_merge($data, array("contentBody" => $this->load->view($view, $data, true))));
+    }
+
+    public function isTokenValid($token) {
+        if ($this->token == $token) {
+            $this->generateToken();
+            return true;
+        }
+
+        return false;
+    }
+
+    private function generateToken() {
+        $this->token = substr(str_shuffle("1234567890qwertyuiopasdfghjklzxcvbnm"), 0, 10);
+        $this->session->set_userdata("token", $this->token);
     }
 
     public function setLogged($idUser, $username, $isAdmin) {
@@ -25,7 +57,7 @@ class MY_Controller extends CI_Controller
             return $this->session->userdata('id_user');
         }
 
-        return false;
+        return 0;
     }
 
     public function isAdmin() {
