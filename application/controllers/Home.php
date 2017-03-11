@@ -17,7 +17,7 @@ class Home extends MY_Controller {
 		$this->show("pages/home", $data);
 	}
 
-	public function category($category) {
+    public function category($category) {
         $exCategory = explode("-", $category);
         $idCategory = end($exCategory);
 

@@ -46,11 +46,12 @@ class Post extends MY_Controller
             if (!$userId) {
                 $this->form_validation->set_rules(
                     'author', 'Автор',
-                    'trim|required|min_length[3]|max_length[30]',
+                    'trim|required|min_length[3]|max_length[30]|is_unique[users.username]',
                     array(
                         'required' => 'Не сте оказали кой е автора.',
                         'min_length' => 'Името ви трябва да съдържа минимум 3 символа.',
                         'max_length' => 'Името ви трябва да съдържа максимум 30 символа.',
+                        'is_unique' => 'Това име се използва от регистриран потребител.'
                     )
                 );
                 $this->form_validation->set_rules('email', 'E-mail адрес', 'trim|valid_email', array(
@@ -75,6 +76,10 @@ class Post extends MY_Controller
 
             if ($this->form_validation->run() !== FALSE) {
                 $this->Comments->postComment($idPost, $username, $email, $this->input->post("description"), $this->input->ip_address(), $userId, $approved);
+
+                if (!$approved)
+                    $this->session->set_flashdata("newComment", "Вашият коментар ще се покаже след като бъде одобрен от администратор.");
+
                 redirect(uri_string());
                 return;
             } else
