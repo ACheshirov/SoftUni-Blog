@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+$currPage = $this->uri->segment(1, "home");
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -25,27 +27,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="<?=site_url("")?>">Начало</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li<?=(in_array($currPage, array('home', 'category', 'tag'))) ? ' class="active"' : ''?>><a href="<?=site_url("")?>">Начало</a></li>
+                <li<?=($currPage == "portfolio") ? ' class="active"' : ''?>><a href="<?=site_url("portfolio")?>">Портфолио</a></li>
+                <li<?=($currPage == "about_me") ? ' class="active"' : ''?>><a href="<?=site_url("about_me")?>">За мен</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <?php if ($_isLogged) : ?>
-                    <?php if ($_isAdmin) : ?>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Администратор <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$_username?> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?=site_url("profile")?>">Твоят профил</a></li>
+                            <li><a href="<?=site_url("logout")?>">Изход от акаунта</a></li>
+                            <?php if ($_isAdmin) : ?>
                                 <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li><a href="#">Separated link</a></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li>
-                    <?php endif ?>
-                    <li><a href="<?=site_url("logout")?>">Изход</a></li>
+                                <li class="dropdown-header">Администратор</li>
+                                <li><a href="<?=site_url("post/new")?>">Нов пост</a></li>
+                                <li><a href="<?=site_url("categories")?>">Реактиране на категориите</a></li>
+                            <?php endif; ?>
+                        </ul>
+                    </li>
                 <?php else : ?>
                     <li><a href="<?=site_url("login")?>">Вход</a></li>
                     <li><a href="<?=site_url("register")?>">Регистрация</a></li>
