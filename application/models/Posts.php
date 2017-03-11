@@ -15,4 +15,12 @@ class Posts extends CI_Model
 
         return null;
     }
+
+    public function increaseComments($id, $count = 1) {
+        return $this->db->set("comments", "comments + " . ((int) $count), false)->where("id", $id)->update("posts");
+    }
+
+    public function decreaseComments($id, $count = 1) {
+        return $this->db->set("comments", "comments - " . ((int) $count), false)->where("id", $id)->update("posts");
+    }
 }
