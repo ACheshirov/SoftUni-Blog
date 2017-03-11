@@ -13,6 +13,10 @@ class Comments_model extends CI_Model
         return null;
     }
 
+    public function getCommentsNotApproved() {
+        return $this->db->where("approved", false)->order_by("id", "ASC")->get("comments")->result_array();
+    }
+
     /**
      * @param $id
      * @return bool
@@ -105,5 +109,9 @@ class Comments_model extends CI_Model
 
             return $this->db->insert('comments', $data);
         }
+    }
+
+    public function countNotApproved() {
+        return $this->db->where("approved", false)->count_all_results("comments");
     }
 }
