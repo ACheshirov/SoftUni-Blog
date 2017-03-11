@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Posts extends CI_Model
+class Posts_model extends CI_Model
 {
     private $postPerPage = 5;
 
@@ -12,8 +12,8 @@ class Posts extends CI_Model
         if (!count($title)) return false;
         if (!count($description)) return false;
 
-        $this->load->model("Categories");
-        if (!$this->Categories->isCategoryExists($category)) return false;
+        $this->load->model("Categories_model");
+        if (!$this->Categories_model->isCategoryExists($category)) return false;
 
         $inserted = $this->db->insert("posts", array(
             'title' => $title,

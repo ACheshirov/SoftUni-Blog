@@ -14,9 +14,9 @@ class Login extends MY_Controller
         $this->load->helper('form');
 
         if ($this->input->post("login") !== null) {
-            $this->load->model("users");
+            $this->load->model("Users_model");
 
-            $userInfo = $this->users->getUserByName($this->input->post("username"));
+            $userInfo = $this->Users_model->getUserByName($this->input->post("username"));
             if ($userInfo !== null) {
                 if (password_verify($this->input->post("password"), $userInfo['password'])) {
                     $this->setLogged($userInfo['id'], $userInfo['username'], $userInfo['admin']);

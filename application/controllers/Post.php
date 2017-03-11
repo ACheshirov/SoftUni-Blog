@@ -12,10 +12,10 @@ class Post extends MY_Controller
         $exPost = explode("-", $post);
         $idPost = end($exPost);
 
-        $this->load->model("Posts");
+        $this->load->model("Posts_model");
 
         if (is_numeric($idPost)) {
-            $postInfo = $this->Posts->getPost($idPost);
+            $postInfo = $this->Posts_model->getPost($idPost);
             if (!isset($postInfo)) {
                 $isPostExists = false;
             }
@@ -27,7 +27,7 @@ class Post extends MY_Controller
         }
 
 
-        $this->load->model('Comments');
+        $this->load->model('Comments_model');
         $this->load->helper('form');
 
         $data = array(
@@ -58,8 +58,8 @@ class Post extends MY_Controller
                     'valid_email' => 'Не сте въвели валиден E-mail адрес.'
                 ));
             } else {
-                $this->load->model("Users");
-                $userInfo = $this->Users->getUserById($userId);
+                $this->load->model("Users_model");
+                $userInfo = $this->Users_model->getUserById($userId);
 
                 if ($userInfo['trusted'] || $userInfo['admin'])
                     $approved = true;
@@ -75,7 +75,7 @@ class Post extends MY_Controller
             ));
 
             if ($this->form_validation->run() !== FALSE) {
-                $this->Comments->postComment($idPost, $username, $email, $this->input->post("description"), $this->input->ip_address(), $userId, $approved);
+                $this->Comments_model->postComment($idPost, $username, $email, $this->input->post("description"), $this->input->ip_address(), $userId, $approved);
 
                 if (!$approved)
                     $this->session->set_flashdata("newComment", "Вашият коментар ще се покаже след като бъде одобрен от администратор.");
@@ -88,7 +88,7 @@ class Post extends MY_Controller
 
         $this->approve_delete_comments();
 
-        $data['comments'] = $this->Comments->getComments($idPost, $this->isAdmin());
+        $data['comments'] = $this->Comments_model->getComments($idPost, $this->isAdmin());
 
         $this->show("pages/posts/details", $data);
     }
@@ -96,10 +96,10 @@ class Post extends MY_Controller
     private function approve_delete_comments() {
         if (($this->input->get("delComment") !== null || $this->input->get("approveComment") !== null) && $this->isAdmin() && $this->isTokenValid($this->input->get("token"))) {
             if ($this->input->get("delComment") !== null)
-                $this->Comments->deleteComment($this->input->get("delComment"));
+                $this->Comments_model->deleteComment($this->input->get("delComment"));
 
             if ($this->input->get("approveComment") !== null)
-                $this->Comments->approveComment($this->input->get("approveComment"));
+                $this->Comments_model->approveComment($this->input->get("approveComment"));
         }
     }
 }

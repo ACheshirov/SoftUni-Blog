@@ -5,13 +5,13 @@ class Home extends MY_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model("Posts");
+        $this->load->model("Posts_model");
     }
 
     public function index()
 	{
         $data = array(
-            "posts" => $this->Posts->getPosts()
+            "posts" => $this->Posts_model->getPosts()
         );
 
 		$this->show("pages/home", $data);
@@ -27,7 +27,7 @@ class Home extends MY_Controller {
         }
 
         $data = array(
-            "posts" => $this->Posts->getPostsByCategory($idCategory)
+            "posts" => $this->Posts_model->getPostsByCategory($idCategory)
         );
 
         $this->show("pages/home", $data);

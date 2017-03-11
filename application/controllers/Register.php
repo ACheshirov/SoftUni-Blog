@@ -14,7 +14,7 @@ class Register extends MY_Controller
         $this->load->helper('form');
 
         if ($this->input->post("register") !== null) {
-            $this->load->model("users");
+            $this->load->model("Users_model");
 
             $this->load->library('form_validation');
 
@@ -44,7 +44,7 @@ class Register extends MY_Controller
             ));
 
             if ($this->form_validation->run() !== FALSE) {
-                $this->users->registerUser($this->input->post("username"), $this->input->post("password"), $this->input->post("email"));
+                $this->Users_model->registerUser($this->input->post("username"), $this->input->post("password"), $this->input->post("email"));
             } else {
                 $data['error'] = current($this->form_validation->error_array());
             }

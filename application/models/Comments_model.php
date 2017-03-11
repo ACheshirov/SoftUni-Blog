@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Comments extends CI_Model
+class Comments_model extends CI_Model
 {
     public function getComments($id, $isAdmin) {
         if (is_numeric($id)) {
@@ -23,9 +23,9 @@ class Comments extends CI_Model
 
         $result = $this->getPostIds($id, true);
         if (count($result)) {
-            $this->load->model("Posts");
+            $this->load->model("Posts_model");
             foreach ($result as $r)
-                $this->Posts->decreaseComments($r['post_id'], $r['total']);
+                $this->Posts_model->decreaseComments($r['post_id'], $r['total']);
         }
 
         $this->db->where_in('id', $id);
@@ -42,9 +42,9 @@ class Comments extends CI_Model
 
         $result = $this->getPostIds($id, false);
         if (count($result)) {
-            $this->load->model("Posts");
+            $this->load->model("Posts_model");
             foreach ($result as $r)
-                $this->Posts->increaseComments($r['post_id'], $r['total']);
+                $this->Posts_model->increaseComments($r['post_id'], $r['total']);
         }
 
         $this->db->set("approved", 1);
@@ -96,8 +96,8 @@ class Comments extends CI_Model
             );
 
             if ($approved) {
-                $this->load->model("Posts");
-                $this->Posts->increaseComments($id);
+                $this->load->model("Posts_model");
+                $this->Posts_model->increaseComments($id);
             }
 
             if ($email !== null)
