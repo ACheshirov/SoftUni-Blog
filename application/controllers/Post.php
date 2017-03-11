@@ -9,15 +9,10 @@ class Post extends MY_Controller
         if ($post == "index")
             $isPostExists = false;
 
-        $this->load->model("Posts");
-
-        if ($post == "new") {
-            $this->show("pages/posts/new");
-            return;
-        }
-
         $exPost = explode("-", $post);
         $idPost = end($exPost);
+
+        $this->load->model("Posts");
 
         if (is_numeric($idPost)) {
             $postInfo = $this->Posts->getPost($idPost);
@@ -31,8 +26,9 @@ class Post extends MY_Controller
             return;
         }
 
-        $this->load->helper('form');
+
         $this->load->model('Comments');
+        $this->load->helper('form');
 
         $data = array(
             'post' => $postInfo
@@ -92,7 +88,7 @@ class Post extends MY_Controller
         $this->show("pages/posts/details", $data);
     }
 
-    public function approve_delete_comments() {
+    private function approve_delete_comments() {
         if (($this->input->get("delComment") !== null || $this->input->get("approveComment") !== null) && $this->isAdmin() && $this->isTokenValid($this->input->get("token"))) {
             if ($this->input->get("delComment") !== null)
                 $this->Comments->deleteComment($this->input->get("delComment"));
