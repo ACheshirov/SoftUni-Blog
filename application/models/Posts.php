@@ -3,10 +3,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Posts extends CI_Model
 {
-    public function getPosts($count = null) {
-        if ($count === null) $count = 5;
+    private $postPerPage = 5;
 
-        return $this->db->limit($count)->get("posts")->result_array();
+    public function newPost($title, $category, $description, $tags) {
+        $title = trim($title);
+        $description = trim($description);
+
+        if (!count($title)) return false;
+        if (!count($description)) return false;
+
+        $this->load->model("Categories");
+        if (!$this->Categories->isCategoryExists($category)) return false;
+
+        $inserted = $this->db->insert("posts", array(
+            'title' => $title,
+            'category' => $category,
+            'description' => $description
+        ));
+
+        if (!$inserted) return false;
+
+        return $this->db->insert_id();
+    }
+
+    public function getPosts($count = null) {
+        if ($count === null) $count = $this->postPerPage;
+
+        return $this->db->limit($count)->order_by("id", "DESC")->get("posts")->result_array();
+    }
+
+    public function getPostsByCategory($category, $count = null) {
+        if ($count === null) $count = $this->postPerPage;
+
+        return $this->db->limit($count)->where('category', (int)$category)->order_by("id", "DESC")->get("posts")->result_array();
     }
 
     public function getPost($id) {
