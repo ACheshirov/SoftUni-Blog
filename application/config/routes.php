@@ -54,3 +54,4 @@ $route['404_override'] = 'Error_404';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['post/new'] = 'New_post';
+$route['category/(:any)'] = "home/category/$1";
