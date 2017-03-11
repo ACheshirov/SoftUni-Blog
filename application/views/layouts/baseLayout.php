@@ -8,6 +8,8 @@ $currPage = $this->uri->segment(1, "home");
     <meta charset="utf-8" />
     <title></title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="<?=base_url("assets/css/bootstrap.min.css")?>" type="text/css" />
     <link rel="stylesheet" href="<?=base_url("assets/css/font-awesome.min.css")?>" type="text/css" />
     <link rel="stylesheet" href="<?=base_url("assets/css/app.css")?>" type="text/css" />
@@ -38,12 +40,7 @@ $currPage = $this->uri->segment(1, "home");
                         <ul class="dropdown-menu">
                             <li><a href="<?=site_url("profile")?>">Твоят профил</a></li>
                             <li><a href="<?=site_url("logout")?>">Изход от акаунта</a></li>
-                            <?php if ($_isAdmin) : ?>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Администратор</li>
-                                <li><a href="<?=site_url("post/new")?>">Нов пост</a></li>
-                                <li><a href="<?=site_url("categories")?>">Реактиране на категориите</a></li>
-                            <?php endif; ?>
+                            <?php if ($_isAdmin) { $this->loadWidget("_adminmenu"); } ?>
                         </ul>
                     </li>
                 <?php else : ?>

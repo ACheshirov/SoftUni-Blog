@@ -10,13 +10,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <?=form_open()?>
     <div class="form-group">
-        <label for="form_username" class="required">Потребителско име</label>
-        <input type="text" id="form_username" name="username" required="required" class="form-control" placeholder="Потребителско име" value="<?=set_value("username")?>" />
+        <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-user"></i></div>
+            <input type="text" id="form_username" name="username" required="required" class="form-control" placeholder="Потребителско име" value="<?=set_value("username")?>" />
+        </div>
     </div>
 
     <div class="form-group">
-        <label for="form_password">Парола</label>
-        <input type="password" id="form_password" name="password" required="required" class="form-control" placeholder="Парола" />
+        <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+            <input type="password" id="form_password" name="password" required="required" class="form-control" placeholder="Парола" />
+        </div>
     </div>
 
     <div><button type="submit" name="login" class="btn btn-primary">Влез</button></div>

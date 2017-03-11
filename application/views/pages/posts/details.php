@@ -21,17 +21,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?=form_open()?>
     <?php if (!$_isLogged) : ?>
     <div class="form-group">
-        <label for="form_author" class="required">Автор</label>
-        <input type="text" id="form_author" name="author" required="required" class="form-control" placeholder="Автор" value="<?=set_value("author")?>" />
+        <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-user"></i></div>
+            <input type="text" id="form_author" name="author" required="required" class="form-control" placeholder="Автор" value="<?=set_value("author")?>" />
+        </div>
     </div>
 
     <div class="form-group">
-        <label for="form_email">E-mail адрес</label>
-        <input type="email" id="form_email" name="email" class="form-control" placeholder="E-mail адрес" value="<?=set_value("email")?>" />
+        <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+            <input type="email" id="form_email" name="email" class="form-control" placeholder="E-mail адрес" value="<?=set_value("email")?>" />
+        </div>
     </div>
     <?php endif; ?>
     <div class="form-group">
-        <label for="form_description" class="required">Съобщение</label>
         <textarea id="form_description" name="description" required="required" rows="5" class="form-control" placeholder="Съобщение"><?=set_value("description")?></textarea>
     </div>
     <div><button type="submit" id="form_save" name="post" class="btn btn-primary">Публикувай коментар</button></div>
