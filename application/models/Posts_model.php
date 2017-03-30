@@ -3,7 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Posts_model extends CI_Model
 {
-    private $postPerPage = 5;
+    private $postPerPage;
+    public function __construct() {
+        $this->postPerPage = $this->config->item("postsPerPage");
+    }
 
     public function newPost($title, $category, $description, $tags) {
         $title = trim($title);

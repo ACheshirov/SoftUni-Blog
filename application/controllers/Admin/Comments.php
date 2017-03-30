@@ -24,7 +24,7 @@ class Comments extends MY_Controller
             "comments" => $this->Comments_model->getCommentsNotApproved()
         );
 
-        $this->show("pages/comments", $data);
+        $this->show("admin/comments", $data);
     }
 
     private function approve() {

@@ -3,10 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends MY_Controller
 {
-    public function index() {
+    public function _remap() {
         if ($this->isLogged()) {
             redirect(base_url());
             return;
+        }
+
+        $redirectTo = null;
+        if ($this->uri->total_segments() > 1) {
+            $segs = $this->uri->segment_array();
+            array_shift($segs);
+            $redirectTo = implode("/", $segs);
         }
 
         $data = array();
@@ -20,7 +27,12 @@ class Login extends MY_Controller
             if ($userInfo !== null) {
                 if (password_verify($this->input->post("password"), $userInfo['password'])) {
                     $this->setLogged($userInfo['id'], $userInfo['username'], $userInfo['admin']);
-                    redirect(base_url());
+
+                    if ($redirectTo !== null)
+                        redirect($redirectTo);
+                    else
+                        redirect(base_url());
+
                 } else $data['error'] = "Грешно потребителско име или парола.";
             } else
                 $data['error'] = "Грешно потребителско име или парола.";

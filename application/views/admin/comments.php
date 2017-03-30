@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <section class="panel">
-    <h4>Коментари за одобряване</h4>
+    <h4><?=$this->lang->line('commentsForApprove')?></h4>
 
     <?php if (count($comments)) : ?>
         <?=form_open()?>
@@ -15,11 +15,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         <?php endforeach; ?>
         <div>
-            <button type="submit" name="approve" class="btn btn-primary">Одобри маркираните</button>
-            <button type="submit" name="delete" class="btn btn-danger">Изтрий маркираните</button>
+            <button type="submit" name="approve" class="btn btn-primary"><?=$this->lang->line('buttonApproveComments')?></button>
+            <button type="submit" name="delete" class="btn btn-danger"><?=$this->lang->line('buttonDeleteComments')?></button>
         </div>
         <?=form_close()?>
     <?php else : ?>
-        <p>Няма чакащи за одобрение коментари в момента.</p>
+        <p><?=$this->lang->line('noCommentsForApprove')?></p>
     <?php endif; ?>
 </section>

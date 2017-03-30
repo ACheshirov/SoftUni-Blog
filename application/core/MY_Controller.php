@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class MY_Controller extends CI_Controller
 {
     private $token = null;
+    private $jsLoad = null;
 
     public function __construct() {
         parent::__construct();
@@ -13,8 +14,18 @@ class MY_Controller extends CI_Controller
             $this->generateToken();
     }
 
+    public function setJs($jsName) {
+        $this->jsLoad = $jsName;
+    }
+
     public function show($view, $data = array(), $loadLayout = null) {
-        if ($loadLayout === null) $loadLayout = "baseLayout";
+        $languageLoad = get_cookie("language");
+        if ($languageLoad === null || !array_key_exists($languageLoad, $this->config->item("allLanguages")))
+            $languageLoad = $this->config->item("defaultLanguage");
+
+        $this->lang->load('app', $languageLoad);
+
+        if ($loadLayout === null) $loadLayout = $this->config->item("defaultLayout");
 
         $data = array_merge($data, array(
             "_isLogged" => $this->isLogged(),
@@ -22,6 +33,8 @@ class MY_Controller extends CI_Controller
             "_username" => $this->session->userdata("username"),
             "_token" => $this->token
         ));
+
+        if ($this->jsLoad !== null) $data['jsLoad'] = $this->jsLoad;
 
         $this->load->view("layouts/".$loadLayout, array_merge($data, array("contentBody" => $this->load->view($view, $data, true))));
     }
@@ -58,6 +71,15 @@ class MY_Controller extends CI_Controller
         }
 
         return 0;
+    }
+
+    public function loginRequired($whiteListed = array()) {
+        if (in_array($this->router->fetch_method(), $whiteListed)) return;
+
+        if (!$this->isLogged()) {
+            redirect("login/".uri_string());
+            exit();
+        }
     }
 
     public function isAdmin() {

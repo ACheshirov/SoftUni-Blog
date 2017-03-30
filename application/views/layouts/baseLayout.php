@@ -29,25 +29,33 @@ $currPage = $this->uri->segment(1, "home");
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li<?=(in_array($currPage, array('home', 'category', 'tag'))) ? ' class="active"' : ''?>><a href="<?=site_url("")?>">Начало</a></li>
-                <li<?=($currPage == "portfolio") ? ' class="active"' : ''?>><a href="<?=site_url("portfolio")?>">Портфолио</a></li>
-                <li<?=($currPage == "about_me") ? ' class="active"' : ''?>><a href="<?=site_url("about_me")?>">За мен</a></li>
+                <li<?=(in_array($currPage, array('home', 'category', 'tag'))) ? ' class="active"' : ''?>><a href="<?=site_url("")?>"><?=$this->lang->line('menu_home')?></a></li>
+                <li<?=($currPage == "portfolio") ? ' class="active"' : ''?>><a href="<?=site_url("portfolio")?>"><?=$this->lang->line('menu_portfolio')?></a></li>
+                <li<?=($currPage == "about_me") ? ' class="active"' : ''?>><a href="<?=site_url("about_me")?>"><?=$this->lang->line('menu_about_me')?></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <?php if ($_isLogged) : ?>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$_username?> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?=site_url("profile")?>">Твоят профил</a></li>
-                            <li><a href="<?=site_url("logout")?>">Изход от акаунта</a></li>
+                            <li><a href="<?=site_url("profile")?>"><?=$this->lang->line('menu_profile')?></a></li>
+                            <li><a href="<?=site_url("logout")?>"><?=$this->lang->line('menu_logout')?></a></li>
                             <?php if ($_isAdmin) { $this->loadWidget("_adminmenu"); } ?>
                         </ul>
                     </li>
                 <?php else : ?>
-                    <li><a href="<?=site_url("login")?>">Вход</a></li>
-                    <li><a href="<?=site_url("register")?>">Регистрация</a></li>
+                    <li><a href="<?=site_url("login")?>"><?=$this->lang->line('menu_login')?></a></li>
+                    <li><a href="<?=site_url("register")?>"><?=$this->lang->line('menu_register')?></a></li>
                 <?php endif ?>
 
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Language <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <?php foreach ($this->config->item("allLanguages") as $langLink => $langText) : ?>
+                            <li><a href="<?=site_url("lang/" . $langLink)?>"><?=$langText?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -62,7 +70,7 @@ $currPage = $this->uri->segment(1, "home");
 
         <div class="col-md-3">
             <aside class="panel">
-                <h4>Категории:</h4>
+                <h4><?=$this->lang->line('panel_categories')?>:</h4>
                 <hr />
                 <?php $this->loadWidget("_categories"); ?>
             </aside>
@@ -77,6 +85,17 @@ $currPage = $this->uri->segment(1, "home");
 
 <script type="text/javascript" src="<?=base_url("assets/js/jquery-3.1.1.min.js")?>"></script>
 <script type="text/javascript" src="<?=base_url("assets/js/bootstrap.min.js")?>"></script>
+<?php if (isset($jsLoad)) : ?>
+    <script type="text/javascript">
+        var baseUrl = "<?=site_url()?>/";
+        var lang = <?=json_encode($this->lang->language['js'])?>;
+        var csfrData = {
+            '<?=$this->security->get_csrf_token_name()?>' : '<?=$this->security->get_csrf_hash()?>'
+        };
+    </script>
+    <script type="text/javascript" src="<?=base_url("assets/js/functions.js")?>"></script>
+    <script type="text/javascript" src="<?=base_url("assets/js/pages/".$jsLoad.".js")?>"></script>
+<?php endif; ?>
 
 </body>
 </html>
