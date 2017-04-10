@@ -13,6 +13,7 @@ $currPage = $this->uri->segment(1, "home");
     <link rel="stylesheet" href="<?=base_url("assets/css/bootstrap.min.css")?>" type="text/css" />
     <link rel="stylesheet" href="<?=base_url("assets/css/font-awesome.min.css")?>" type="text/css" />
     <link rel="stylesheet" href="<?=base_url("assets/css/app.css")?>" type="text/css" />
+    <link rel="stylesheet" href="<?=base_url("assets/summernote/summernote.css")?>" type="text/css" />
 </head>
 <body>
 
@@ -85,6 +86,7 @@ $currPage = $this->uri->segment(1, "home");
 
 <script type="text/javascript" src="<?=base_url("assets/js/jquery-3.1.1.min.js")?>"></script>
 <script type="text/javascript" src="<?=base_url("assets/js/bootstrap.min.js")?>"></script>
+<script type="text/javascript" src="<?=base_url("assets/summernote/summernote.min.js")?>"></script>
 <?php if (isset($jsLoad)) : ?>
     <script type="text/javascript">
         var baseUrl = "<?=site_url()?>/";

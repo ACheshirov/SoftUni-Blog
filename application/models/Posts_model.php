@@ -23,12 +23,20 @@ class Posts_model extends CI_Model
         $inserted = $this->db->insert("posts", array(
             'title' => $title,
             'category' => $category,
-            'description' => $description
+            'description' => nl2br($description)
         ));
 
         if (!$inserted) return false;
 
         return $this->db->insert_id();
+    }
+
+    public function editPost($id, $title, $description) {
+        $this->db->set("title", $title);
+        $this->db->set("description", $description);
+
+        $this->db->where("id", $id);
+        return $this->db->update("posts");
     }
 
     public function getPosts($offset = null, $count = null) {

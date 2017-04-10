@@ -9,6 +9,8 @@ class New_post extends MY_Controller
             return;
         }
 
+        $this->setJs("post");
+
         $this->load->model("Categories_model");
         $this->load->model("Posts_model");
         $this->load->helper("form");
@@ -26,5 +28,13 @@ class New_post extends MY_Controller
         }
 
         $this->show("pages/posts/new", $data);
+    }
+
+    public function editPost() {
+        if ($this->isAdmin()) {
+            $this->load->model("Posts_model");
+
+            $this->Posts_model->editPost($this->input->post("id"), $this->input->post("title"), $this->input->post("description"));
+        }
     }
 }

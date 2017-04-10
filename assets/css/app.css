@@ -53,3 +53,11 @@
 .footer p:last-child {
     margin-bottom: 0;
 }
+
+#editPost {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    display: none;
+    font-size: 18px;
+}

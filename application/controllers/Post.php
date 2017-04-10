@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Post extends MY_Controller
 {
     public function _remap($post) {
+        $this->setJs("post");
+
         $isPostExists = true;
 
         if ($post == "index")

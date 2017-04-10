@@ -1,9 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<section class="panel">
+<section class="panel" id="content" data-post-id="<?=$post['id']?>">
+    <?=($_isAdmin) ? '<span id="editPost"><a href="javascript:void(null)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>' : ''?>
     <h3><?=$post['title']?></h3>
-    <p><?=nl2br($post['description'])?></p>
+    <div id="description">
+        <?=$post['description']?>
+    </div>
     <i class="fa fa-comments-o"></i> <i><?=$post['comments']?> коментара</i>
 </section>
 
