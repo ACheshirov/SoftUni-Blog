@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <div class="form-group">
-        <textarea id="form_description" name="description" required="required" rows="15" class="form-control" placeholder="Съдържание"><?=set_value("description")?></textarea>
+        <textarea id="form_description_new" name="description" required="required" rows="15" class="form-control" placeholder="Съдържание"><?=set_value("description")?></textarea>
     </div>
 
     <div class="form-group">

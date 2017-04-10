@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#form_description").summernote({
+    $("#form_description_new").summernote({
         height: 200,
         minHeight: 100,
         maxHeight: 300
