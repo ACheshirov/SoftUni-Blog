@@ -44,8 +44,8 @@ $currPage = $this->uri->segment(1, "home");
                         </ul>
                     </li>
                 <?php else : ?>
-                    <li><a href="<?=site_url("login")?>"><?=$this->lang->line('menu_login')?></a></li>
-                    <li><a href="<?=site_url("register")?>"><?=$this->lang->line('menu_register')?></a></li>
+                    <li<?=($currPage == "login") ? ' class="active"' : ''?>><a href="<?=site_url("login")?>"><?=$this->lang->line('menu_login')?></a></li>
+                    <li<?=($currPage == "register") ? ' class="active"' : ''?>><a href="<?=site_url("register")?>"><?=$this->lang->line('menu_register')?></a></li>
                 <?php endif ?>
 
                 <li class="dropdown">
@@ -80,7 +80,7 @@ $currPage = $this->uri->segment(1, "home");
 
 
 <footer class="footer">
-    <p>This blog system is created by <a href="https://github.com/ACheshirov/" target="_blank">HunteR</a>.</p>
+    <p>This blog system is created by <a href="https://acheshirov.info" target="_blank">Aleksandar Cheshirov</a>.</p>
 </footer>
 
 <script type="text/javascript" src="<?=base_url("assets/js/jquery-3.1.1.min.js")?>"></script>

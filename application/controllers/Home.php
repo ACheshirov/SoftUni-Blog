@@ -10,11 +10,7 @@ class Home extends MY_Controller {
 
     public function index()
 	{
-        $data = array(
-            "posts" => $this->Posts_model->getPosts()
-        );
-
-		$this->show("pages/home", $data);
+        $this->loadPosts();
 	}
 
     public function category($category) {
@@ -26,9 +22,21 @@ class Home extends MY_Controller {
             return;
         }
 
-        $data = array(
-            "posts" => $this->Posts_model->getPostsByCategory($idCategory)
-        );
+        $this->loadPosts(["posts" => $this->Posts_model->getPostsByCategory($idCategory, $this->input->get($this->config->item("pagination")['query_string_segment']))]);
+    }
+
+    private function loadPosts($data = []) {
+        $this->load->library('pagination');
+
+        if (!isset($data['posts']))
+            $data['posts'] = $this->Posts_model->getPosts($this->input->get($this->config->item("pagination")['query_string_segment']));
+
+        $this->pagination->initialize(array_merge($this->config->item("pagination"), [
+            'first_url' => current_url(),
+            'total_rows' => $this->Posts_model->getTotalRows()
+        ]));
+
+        $data["pages"] = $this->pagination->create_links();
 
         $this->show("pages/home", $data);
     }

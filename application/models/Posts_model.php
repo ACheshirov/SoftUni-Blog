@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Posts_model extends CI_Model
 {
+    private $allRows = 0;
+
     private $postPerPage;
     public function __construct() {
         $this->postPerPage = $this->config->item("postsPerPage");
@@ -12,8 +14,8 @@ class Posts_model extends CI_Model
         $title = trim($title);
         $description = trim($description);
 
-        if (!count($title)) return false;
-        if (!count($description)) return false;
+        if (!mb_strlen($title)) return false;
+        if (!mb_strlen($description)) return false;
 
         $this->load->model("Categories_model");
         if (!$this->Categories_model->isCategoryExists($category)) return false;
@@ -29,16 +31,20 @@ class Posts_model extends CI_Model
         return $this->db->insert_id();
     }
 
-    public function getPosts($count = null) {
-        if ($count === null) $count = $this->postPerPage;
+    public function getPosts($offset = null, $count = null) {
+        $this->allRows = $this->db->count_all_results("posts", false);
 
-        return $this->db->limit($count)->order_by("id", "DESC")->get("posts")->result_array();
+        if ($count === null) $count = $this->postPerPage;
+        if ($offset !== null && is_numeric($offset)) $this->db->offset($offset);
+
+        return $this->db->limit($count)->order_by("id", "DESC")->get()->result_array();
     }
 
-    public function getPostsByCategory($category, $count = null) {
+    public function getPostsByCategory($category, $offset = null, $count = null) {
         if ($count === null) $count = $this->postPerPage;
+        $this->db->where('category', (int)$category);
 
-        return $this->db->limit($count)->where('category', (int)$category)->order_by("id", "DESC")->get("posts")->result_array();
+        return $this->getPosts($offset, $count);
     }
 
     public function getPost($id) {
@@ -46,6 +52,10 @@ class Posts_model extends CI_Model
             return $this->db->where("id", $id)->get("posts")->row_array();
 
         return null;
+    }
+
+    public function getTotalRows() {
+        return $this->allRows;
     }
 
     public function increaseComments($id, $count = 1) {

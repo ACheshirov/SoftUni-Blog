@@ -10,4 +10,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <i class="fa fa-comments-o"></i> <i><?=$post['comments']?> <?=$this->lang->line('posts_comments')?></i>
         <hr />
     <?php endforeach; ?>
+    <?=(isset($pages)) ? $pages : ""?>
 </section>
