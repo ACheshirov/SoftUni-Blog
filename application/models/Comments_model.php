@@ -30,17 +30,26 @@ class Comments_model extends CI_Model
     }
 
     /**
+     * @param $offset
+     * @param $count
+     * @return array
+     */
+    public function getCommentsNotApproved($offset = null, $count = null) {
+        $this->db->where("approved", false);
+
+        $this->allRows = $this->db->count_all_results("comments", false);
+
+        if ($offset !== null && is_numeric($offset)) $this->db->offset($offset);
+        if ($count === null) $count = $this->config->item("commentsPerPageAdmin");
+
+        return $this->db->order_by("id", "ASC")->limit($count)->get()->result_array();
+    }
+
+    /**
      * @return int
      */
     public function getTotalComments() {
         return $this->allRows;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCommentsNotApproved() {
-        return $this->db->where("approved", false)->order_by("id", "ASC")->get("comments")->result_array();
     }
 
     /**

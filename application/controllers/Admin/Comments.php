@@ -21,8 +21,19 @@ class Comments extends MY_Controller
         $this->load->helper("form");
 
         $data = array(
-            "comments" => $this->Comments_model->getCommentsNotApproved()
+            "comments" => $this->Comments_model->getCommentsNotApproved($this->input->get($this->config->item("pagination")['query_string_segment']))
         );
+
+        $this->load->library('pagination');
+
+        $this->pagination->initialize(array_merge($this->config->item("pagination"), [
+            'per_page' => $this->config->item("commentsPerPageAdmin"),
+            'first_url' => current_url(),
+            'total_rows' => $this->Comments_model->getTotalComments(),
+            'full_tag_open' => '<ul class="pagination pagination-sm">'
+        ]));
+
+        $data["pages"] = $this->pagination->create_links();
 
         $this->show("admin/comments", $data);
     }

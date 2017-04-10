@@ -8,6 +8,7 @@ $config['allLanguages'] = array('bulgaria' => 'Български', 'english' =>
 
 $config['postsPerPage'] = 5;
 $config['commentsPerPage'] = 15;
+$config['commentsPerPageAdmin'] = 50;
 
 $config['pagination'] = [
     'page_query_string' => true,
