@@ -3,16 +3,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Comments_model extends CI_Model
 {
-    public function getComments($id, $isAdmin) {
+    private $allRows = 0;
+
+    /**
+     * @param $id
+     * @param $isAdmin
+     * @param $offset
+     * @param $count
+     * @return array
+     */
+    public function getComments($id, $isAdmin, $offset = null, $count = null) {
         if (is_numeric($id)) {
             if (!$isAdmin)
                 $this->db->where('approved', true);
 
-            return $this->db->where("post_id", $id)->order_by("id", "DESC")->get("comments")->result_array();
+            $this->db->where("post_id", $id);
+
+            $this->allRows = $this->db->count_all_results("comments", false);
+
+            if ($offset !== null && is_numeric($offset)) $this->db->offset($offset);
+            if ($count === null) $count = $this->config->item("commentsPerPage");
+
+            return $this->db->order_by("id", "DESC")->limit($count)->get()->result_array();
         }
         return null;
     }
 
+    /**
+     * @return int
+     */
+    public function getTotalComments() {
+        return $this->allRows;
+    }
+
+    /**
+     * @return array
+     */
     public function getCommentsNotApproved() {
         return $this->db->where("approved", false)->order_by("id", "ASC")->get("comments")->result_array();
     }

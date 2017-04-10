@@ -19,6 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <button type="submit" name="delete" class="btn btn-danger"><?=$this->lang->line('buttonDeleteComments')?></button>
         </div>
         <?=form_close()?>
+        <?=(isset($pages)) ? $pages : ""?>
     <?php else : ?>
         <p><?=$this->lang->line('noCommentsForApprove')?></p>
     <?php endif; ?>

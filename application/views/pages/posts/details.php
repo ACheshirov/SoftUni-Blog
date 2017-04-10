@@ -48,4 +48,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         &nbsp;<span class="date"><i class="fa fa-clock-o"></i> <?=date('H:i d.m.Y', strtotime($comment['dateCreate']))?></span>
     </div>
     <?php endforeach; ?>
+    <?=(isset($pages)) ? $pages : ""?>
 </section>

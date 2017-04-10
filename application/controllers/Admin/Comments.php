@@ -29,11 +29,11 @@ class Comments extends MY_Controller
 
     private function approve() {
         $this->Comments_model->approveComment($this->input->post("comment"));
-        redirect("comments");
+        redirect("Admin/comments");
     }
 
     private function delete() {
         $this->Comments_model->deleteComment($this->input->post("comment"));
-        redirect("comments");
+        redirect("Admin/comments");
     }
 }

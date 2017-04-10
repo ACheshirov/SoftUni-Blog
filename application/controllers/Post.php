@@ -88,7 +88,18 @@ class Post extends MY_Controller
 
         $this->approve_delete_comments();
 
-        $data['comments'] = $this->Comments_model->getComments($idPost, $this->isAdmin());
+        $data['comments'] = $this->Comments_model->getComments($idPost, $this->isAdmin(), $this->input->get($this->config->item("pagination")['query_string_segment']));
+
+        $this->load->library('pagination');
+
+        $this->pagination->initialize(array_merge($this->config->item("pagination"), [
+            'first_url' => current_url(),
+            'total_rows' => $this->Comments_model->getTotalComments(),
+            'per_page' => $this->config->item('commentsPerPage'),
+            'full_tag_open' => '<ul class="pagination pagination-sm">'
+        ]));
+
+        $data["pages"] = $this->pagination->create_links();
 
         $this->show("pages/posts/details", $data);
     }

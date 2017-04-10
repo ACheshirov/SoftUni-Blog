@@ -6,10 +6,10 @@ $config['defaultLayout'] = "baseLayout";
 $config['defaultLanguage'] = "bulgaria";
 $config['allLanguages'] = array('bulgaria' => 'Български', 'english' => 'English');
 
-$config['postsPerPage'] = 6;
+$config['postsPerPage'] = 5;
+$config['commentsPerPage'] = 15;
 
 $config['pagination'] = [
-    'per_page' => $config['postsPerPage'],
     'page_query_string' => true,
     'query_string_segment' => 'page',
     'reuse_query_string' => true,
