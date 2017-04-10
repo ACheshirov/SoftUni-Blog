@@ -6,10 +6,10 @@ class Comments_model extends CI_Model
     private $allRows = 0;
 
     /**
-     * @param $id
-     * @param $isAdmin
-     * @param $offset
-     * @param $count
+     * @param int $id
+     * @param bool $isAdmin
+     * @param int $offset
+     * @param int $count
      * @return array
      */
     public function getComments($id, $isAdmin, $offset = null, $count = null) {
@@ -30,8 +30,8 @@ class Comments_model extends CI_Model
     }
 
     /**
-     * @param $offset
-     * @param $count
+     * @param int $offset
+     * @param int $count
      * @return array
      */
     public function getCommentsNotApproved($offset = null, $count = null) {
@@ -53,7 +53,7 @@ class Comments_model extends CI_Model
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return bool
      */
     public function deleteComment($id) {
@@ -72,7 +72,7 @@ class Comments_model extends CI_Model
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return bool
      */
     public function approveComment($id) {
@@ -114,13 +114,15 @@ class Comments_model extends CI_Model
     }
 
     /**
-     * @param $id
-     * @param $author
-     * @param $email
-     * @param $description
-     * @param $ip
+     * @param int $id
+     * @param int $author
+     * @param string $email
+     * @param string $description
+     * @param string $ip
      * @param int $user_id
      * @param bool $approved
+     *
+     * @return bool
      */
     public function postComment($id, $author, $email, $description, $ip, $user_id = 0, $approved = false) {
         if (is_numeric($id)) {
@@ -146,6 +148,9 @@ class Comments_model extends CI_Model
         }
     }
 
+    /**
+     * @return int
+     */
     public function countNotApproved() {
         return $this->db->where("approved", false)->count_all_results("comments");
     }

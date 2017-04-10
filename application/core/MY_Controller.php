@@ -53,7 +53,7 @@ class MY_Controller extends CI_Controller
         $this->session->set_userdata("token", $this->token);
     }
 
-    public function setLogged($idUser, $username, $isAdmin) {
+    public function setLogged($idUser, $username, $isAdmin = false) {
         $this->session->set_userdata(array(
             "id_user" => (int)$idUser,
             "username" => $username,

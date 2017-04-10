@@ -44,7 +44,9 @@ class Register extends MY_Controller
             ));
 
             if ($this->form_validation->run() !== FALSE) {
-                $this->Users_model->registerUser($this->input->post("username"), $this->input->post("password"), $this->input->post("email"));
+                $userId = $this->Users_model->registerUser($this->input->post("username"), $this->input->post("password"), $this->input->post("email"));
+                $this->setLogged($userId, $this->input->post("username"));
+                redirect(base_url());
             } else {
                 $data['error'] = current($this->form_validation->error_array());
             }

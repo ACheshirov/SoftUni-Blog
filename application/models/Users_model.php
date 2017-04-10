@@ -27,7 +27,7 @@ class Users_model extends CI_Model
      * @param $username
      * @param $password
      * @param $email
-     * @return boolean
+     * @return int
      */
     public function registerUser($username, $password, $email) {
         $data = array(
@@ -35,6 +35,9 @@ class Users_model extends CI_Model
             "password" => password_hash($password, PASSWORD_DEFAULT),
             "email" => $email
         );
-        return $this->db->insert('users', $data);
+
+        $this->db->insert('users', $data);
+
+        return $this->db->insert_id();
     }
 }

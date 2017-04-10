@@ -5,13 +5,17 @@ class Categories extends MY_Controller
 {
     public function __construct() {
         parent::__construct();
-        $this->loginRequired();
 
         $this->load->model("Categories_model");
         $this->setJs("categories");
     }
 
     public function index() {
+        if (!$this->isAdmin()) {
+            $this->show_404();
+            return;
+        }
+
         $data = array();
 
         $data['categories'] = $this->Categories_model->getCategories();
@@ -20,14 +24,17 @@ class Categories extends MY_Controller
     }
 
     public function add() {
-        echo $this->Categories_model->addCategory($this->input->post("name"));
+        if ($this->isAdmin())
+            echo $this->Categories_model->addCategory($this->input->post("name"));
     }
 
     public function edit() {
-        $this->Categories_model->changeName($this->input->post("id"), $this->input->post("name"));
+        if ($this->isAdmin())
+            $this->Categories_model->changeName($this->input->post("id"), $this->input->post("name"));
     }
 
     public function delete() {
-        $this->Categories_model->deleteCategory($this->input->post("id"));
+        if ($this->isAdmin())
+            $this->Categories_model->deleteCategory($this->input->post("id"));
     }
 }
