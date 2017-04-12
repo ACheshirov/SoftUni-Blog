@@ -20,10 +20,13 @@ class Posts_model extends CI_Model
         $this->load->model("Categories_model");
         if (!$this->Categories_model->isCategoryExists($category)) return false;
 
+        $tags = preg_replace('[\,]{2,}', ',', ",".trim(preg_replace('/\s*,\s*/', ',', $tags)).",");
+
         $inserted = $this->db->insert("posts", array(
             'title' => $title,
             'category' => $category,
-            'description' => nl2br($description)
+            'description' => nl2br($description),
+            'tags' => $tags
         ));
 
         if (!$inserted) return false;
@@ -49,8 +52,13 @@ class Posts_model extends CI_Model
     }
 
     public function getPostsByCategory($category, $offset = null, $count = null) {
-        if ($count === null) $count = $this->postPerPage;
         $this->db->where('category', (int)$category);
+
+        return $this->getPosts($offset, $count);
+    }
+
+    public function getPostsByTag($tag, $offset = null, $count = null) {
+        $this->db->like("tags", urldecode($tag));
 
         return $this->getPosts($offset, $count);
     }

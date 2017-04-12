@@ -25,6 +25,10 @@ class Home extends MY_Controller
         $this->loadPosts(["posts" => $this->Posts_model->getPostsByCategory($idCategory, $this->input->get($this->config->item("pagination")['query_string_segment']))]);
     }
 
+    public function tag($tag) {
+        $this->loadPosts(["posts" => $this->Posts_model->getPostsByTag($tag, $this->input->get($this->config->item("pagination")['query_string_segment']))]);
+    }
+
     private function loadPosts($data = []) {
         if (!isset($data['posts']))
             $data['posts'] = $this->Posts_model->getPosts($this->input->get($this->config->item("pagination")['query_string_segment']));

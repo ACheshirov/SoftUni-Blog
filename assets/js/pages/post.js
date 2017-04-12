@@ -5,6 +5,11 @@ $(document).ready(function() {
         maxHeight: 300
     });
 
+    $("body").on("keyup", "#form_tags", function() {
+        if (/\s+,/g.test($(this).val()) || /,\s+/g.test($(this).val()))
+            $(this).val($(this).val().replace(/\s*,\s*/g, ','));
+    });
+
     $("body").on("mouseover mouseout click", "#content", function(event) {
         var buttonEditShow = $("#editPost").is(":visible");
         var showHideButton;

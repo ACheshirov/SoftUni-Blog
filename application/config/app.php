@@ -6,6 +6,8 @@ $config['defaultLayout'] = "baseLayout";
 $config['defaultLanguage'] = "bulgaria";
 $config['allLanguages'] = array('bulgaria' => 'Български', 'english' => 'English');
 
+$config['tagsCount'] = 15;
+
 $config['postsPerPage'] = 5;
 $config['commentsPerPage'] = 15;
 $config['commentsPerPageAdmin'] = 50;

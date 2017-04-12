@@ -75,6 +75,12 @@ $currPage = $this->uri->segment(1, "home");
                 <hr />
                 <?php $this->loadWidget("_categories"); ?>
             </aside>
+
+            <aside class="panel">
+                <h4><?=$this->lang->line('panel_tags')?>:</h4>
+                <hr />
+                <?php $this->loadWidget("_tags"); ?>
+            </aside>
         </div>
     </div>
 </div>
@@ -87,6 +93,7 @@ $currPage = $this->uri->segment(1, "home");
 <script type="text/javascript" src="<?=base_url("assets/js/jquery-3.1.1.min.js")?>"></script>
 <script type="text/javascript" src="<?=base_url("assets/js/bootstrap.min.js")?>"></script>
 <script type="text/javascript" src="<?=base_url("assets/summernote/summernote.min.js")?>"></script>
+<script type="text/javascript" src="<?=base_url("assets/js/functions.js")?>"></script>
 <?php if (isset($jsLoad)) : ?>
     <script type="text/javascript">
         var baseUrl = "<?=site_url()?>/";
@@ -95,7 +102,6 @@ $currPage = $this->uri->segment(1, "home");
             '<?=$this->security->get_csrf_token_name()?>' : '<?=$this->security->get_csrf_hash()?>'
         };
     </script>
-    <script type="text/javascript" src="<?=base_url("assets/js/functions.js")?>"></script>
     <script type="text/javascript" src="<?=base_url("assets/js/pages/".$jsLoad.".js")?>"></script>
 <?php endif; ?>
 

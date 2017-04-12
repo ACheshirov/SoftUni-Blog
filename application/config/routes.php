@@ -55,3 +55,4 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['post/new'] = 'Admin/New_post';
 $route['category/(:any)'] = "home/category/$1";
+$route['tag/(:any)'] = "home/tag/$1";

@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="form-group">
         <div class="input-group">
             <div class="input-group-addon"><i class="fa fa-tags"></i></div>
-            <input type="text" id="form_tags" name="tags" class="form-control" placeholder="Тагове разделени със запетаи" value="<?=set_value("tags")?>" />
+            <input type="text" id="form_tags" maxlength="253" name="tags" class="form-control" placeholder="Тагове разделени със запетаи" value="<?=set_value("tags")?>" />
         </div>
     </div>
 
