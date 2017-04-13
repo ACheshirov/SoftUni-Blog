@@ -57,8 +57,37 @@ class Posts_model extends CI_Model
         return $this->getPosts($offset, $count);
     }
 
+    public function getPostsBySearch($search, $offset = null, $count = null) {
+        $words = array_unique(array_filter(array_map(function($v) {
+            return $this->db->escape_str(trim(mb_strtolower($v)));
+        }, explode(" ", $search)), function($v) {
+            return (mb_strlen($v) >= 3);
+        }));
+
+        if (count($words)) {
+            $this->db->group_start();
+
+            foreach ($words as $word)
+                $this->db->or_like('`title`', $word, 'both', false);
+
+            $this->db->group_end();
+
+
+            $this->db->or_group_start();
+
+            foreach ($words as $word)
+                $this->db->or_like('`tags`', $word, 'both', false);
+
+            $this->db->group_end();
+
+            $this->db->order_by("((LENGTH(`title`) - LENGTH(REPLACE(`title`, '".implode("', ''))) + (LENGTH(`title`) - LENGTH(REPLACE(`title`, '", $words)."', '')))) DESC");
+        }
+
+        return $this->getPosts($offset, $count);
+    }
+
     public function getPostsByTag($tag, $offset = null, $count = null) {
-        $this->db->like("tags", urldecode($tag));
+        $this->db->like("tags", ','.urldecode($tag).',');
 
         return $this->getPosts($offset, $count);
     }

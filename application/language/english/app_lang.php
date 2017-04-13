@@ -24,6 +24,7 @@ $lang['404_text'] = 'It\'s look like the page you tried to load doesn\'t exists.
 // Widget categories
 $lang['panel_categories'] = 'Categories';
 $lang['panel_tags'] = 'Tags';
+$lang['panel_search'] = 'Search';
 
 
 // Posts

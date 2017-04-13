@@ -29,6 +29,15 @@ class Home extends MY_Controller
         $this->loadPosts(["posts" => $this->Posts_model->getPostsByTag($tag, $this->input->get($this->config->item("pagination")['query_string_segment']))]);
     }
 
+    public function search() {
+        if ($this->input->get('q') === null) {
+            $this->loadPosts();
+            return;
+        }
+
+        $this->loadPosts(["posts" => $this->Posts_model->getPostsBySearch($this->input->get('q'), $this->input->get($this->config->item("pagination")['query_string_segment']))]);
+    }
+
     private function loadPosts($data = []) {
         if (!isset($data['posts']))
             $data['posts'] = $this->Posts_model->getPosts($this->input->get($this->config->item("pagination")['query_string_segment']));
@@ -42,6 +51,8 @@ class Home extends MY_Controller
         ]));
 
         $data["pages"] = $this->pagination->create_links();
+
+        //echo $this->db->last_query();
 
         $this->show("pages/home", $data);
     }

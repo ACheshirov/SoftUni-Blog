@@ -71,6 +71,20 @@ $currPage = $this->uri->segment(1, "home");
 
         <div class="col-md-3">
             <aside class="panel">
+                <h4><?=$this->lang->line('panel_search')?>:</h4>
+                <hr />
+                <form action="<?=site_url('search')?>" method="get">
+                    <div class="form-group">
+                        <div class="inner-addon">
+                            <input type="text" name="q" value="<?=htmlspecialchars($this->input->get('q', false), ENT_COMPAT, 'UTF-8')?>" class="form-control" />
+                            <i id="search" class="glyphicon glyphicon-search"></i>
+                            <input type="submit" class="hidden" />
+                        </div>
+                    </div>
+                </form>
+            </aside>
+
+            <aside class="panel">
                 <h4><?=$this->lang->line('panel_categories')?>:</h4>
                 <hr />
                 <?php $this->loadWidget("_categories"); ?>

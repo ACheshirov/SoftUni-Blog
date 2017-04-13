@@ -24,6 +24,7 @@ $lang['404_text'] = 'Изглежда, че страницата, която с�
 // Widget categories
 $lang['panel_categories'] = 'Категории';
 $lang['panel_tags'] = 'Тагове';
+$lang['panel_search'] = 'Търсачка';
 
 
 // Posts

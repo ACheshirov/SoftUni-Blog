@@ -13,14 +13,14 @@ function ajaxThis(page, data, onDone, onFail) {
 }
 
 $(document).ready(function() {
+    $("body").on("click", "#search", function() {
+        $(this).closest('form').submit();
+    });
+
     $('a').each(function() {
         var a = new RegExp('/' + window.location.host + '/');
-        if(!a.test(this.href)) {
-            $(this).click(function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                window.open(this.href, '_blank');
-            });
-        }
+
+        if(!a.test(this.href) && this.href !== "")
+            $(this).attr('target', '_blank');
     });
 });
