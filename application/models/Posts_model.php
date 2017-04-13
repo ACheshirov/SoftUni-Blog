@@ -80,7 +80,7 @@ class Posts_model extends CI_Model
 
             $this->db->group_end();
 
-            $this->db->order_by("((LENGTH(`title`) - LENGTH(REPLACE(`title`, '".implode("', ''))) + (LENGTH(`title`) - LENGTH(REPLACE(`title`, '", $words)."', '')))) DESC");
+            $this->db->order_by("((CHAR_LENGTH(`title`) - CHAR_LENGTH(REPLACE(LOWER(`title`), '".implode("', ''))) + (CHAR_LENGTH(`title`) - CHAR_LENGTH(REPLACE(LOWER(`title`), '", $words)."', '')))) DESC");
         }
 
         return $this->getPosts($offset, $count);
