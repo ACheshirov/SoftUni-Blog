@@ -31,9 +31,11 @@ class Post extends MY_Controller
 
         $this->load->model('Comments_model');
         $this->load->helper('form');
+        $this->load->model("Categories_model");
 
         $data = array(
-            'post' => $postInfo
+            'post' => $postInfo,
+            'categories' => $this->Categories_model->getCategories()
         );
 
         if ($this->input->post("post") !== null) {

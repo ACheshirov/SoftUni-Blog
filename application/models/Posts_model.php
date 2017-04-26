@@ -10,6 +10,10 @@ class Posts_model extends CI_Model
         $this->postPerPage = $this->config->item("postsPerPage");
     }
 
+    private function _tagsFix($tags) {
+        return preg_replace('/[\,]{2,}/', ',', ",".trim(preg_replace('/\s*,\s*/', ',', $tags)).",");
+    }
+
     public function newPost($title, $category, $description, $tags) {
         $title = trim($title);
         $description = trim($description);
@@ -20,13 +24,14 @@ class Posts_model extends CI_Model
         $this->load->model("Categories_model");
         if (!$this->Categories_model->isCategoryExists($category)) return false;
 
-        $tags = preg_replace('[\,]{2,}', ',', ",".trim(preg_replace('/\s*,\s*/', ',', $tags)).",");
+        $tags = $this->_tagsFix($tags);
 
         $inserted = $this->db->insert("posts", array(
             'title' => $title,
             'category' => $category,
             'description' => nl2br($description),
-            'tags' => $tags
+            'tags' => $tags,
+            'dateCreate' => date("Y-m-d H:i:s")
         ));
 
         if (!$inserted) return false;
@@ -34,11 +39,14 @@ class Posts_model extends CI_Model
         return $this->db->insert_id();
     }
 
-    public function editPost($id, $title, $description) {
+    public function editPost($id, $title, $description, $category, $tags) {
         $this->db->set("title", $title);
         $this->db->set("description", $description);
+        $this->db->set("category", (int) $category);
+        $this->db->set("tags", $this->_tagsFix($tags));
 
         $this->db->where("id", $id);
+
         return $this->db->update("posts");
     }
 
@@ -48,7 +56,10 @@ class Posts_model extends CI_Model
         if ($count === null) $count = $this->postPerPage;
         if ($offset !== null && is_numeric($offset)) $this->db->offset($offset);
 
-        return $this->db->limit($count)->order_by("id", "DESC")->get()->result_array();
+        $this->db->join("categories", "posts.category = categories.id");
+        $this->db->select("posts.*, categories.name as categoryName");
+
+        return $this->db->limit($count)->order_by("posts.id", "DESC")->get()->result_array();
     }
 
     public function getPostsByCategory($category, $offset = null, $count = null) {
@@ -93,8 +104,12 @@ class Posts_model extends CI_Model
     }
 
     public function getPost($id) {
-        if (is_numeric($id))
-            return $this->db->where("id", $id)->get("posts")->row_array();
+        if (is_numeric($id)) {
+            $this->db->where("posts.id", $id);
+            $this->db->select("posts.*, categories.name as categoryName");
+            $this->db->join("categories", "posts.category = categories.id");
+            return $this->db->get("posts")->row_array();
+        }
 
         return null;
     }

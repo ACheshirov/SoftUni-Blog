@@ -34,7 +34,7 @@ class New_post extends MY_Controller
         if ($this->isAdmin()) {
             $this->load->model("Posts_model");
 
-            $this->Posts_model->editPost($this->input->post("id"), $this->input->post("title"), $this->input->post("description"));
+            $this->Posts_model->editPost($this->input->post("id"), $this->input->post("title"), $this->input->post("description"), $this->input->post("category"), $this->input->post("tags"));
         }
     }
 }
