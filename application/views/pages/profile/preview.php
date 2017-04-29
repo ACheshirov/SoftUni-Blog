@@ -19,11 +19,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-xs-3">E-mail:</div>
             <div class="col-xs-9"><?=$email?></div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <a href="<?=site_url("profile/edit")?>" class="btn btn-default">Редактирай профила</a>
-            </div>
-        </div>
     <?php endif; ?>
 </section>

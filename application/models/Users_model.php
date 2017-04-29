@@ -40,4 +40,32 @@ class Users_model extends CI_Model
 
         return $this->db->insert_id();
     }
+
+    /**
+     * @param $user
+     * @param int $increasedWith
+     */
+    public function increaseComment($user, $increasedWith = 1) {
+        $this->db->set('comments', 'comments+'.((int) $increasedWith), FALSE);
+        if (gettype($user) == "integer")
+            $this->db->where('id', $user);
+        else
+            $this->db->where('username', $user);
+
+        $this->db->update('users');
+    }
+
+    /**
+     * @param $user
+     * @param int $decreasedWith
+     */
+    public function decreaseComment($user, $decreasedWith = 1) {
+        $this->db->set('comments', 'comments-'.((int) $decreasedWith), FALSE);
+        if (gettype($user) == "integer")
+            $this->db->where('id', $user);
+        else
+            $this->db->where('username', $user);
+
+        $this->db->update('users');
+    }
 }

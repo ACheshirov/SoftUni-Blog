@@ -126,6 +126,8 @@ class Comments_model extends CI_Model
      */
     public function postComment($id, $author, $email, $description, $ip, $user_id = 0, $approved = false) {
         if (is_numeric($id)) {
+            $this->load->model("Users_model");
+
             $data = array(
                 'post_id' => $id,
                 'user_id' => $user_id,
@@ -139,6 +141,7 @@ class Comments_model extends CI_Model
             if ($approved) {
                 $this->load->model("Posts_model");
                 $this->Posts_model->increaseComments($id);
+                $this->Users_model->increaseComment($user_id);
             }
 
             if ($email !== null)
